@@ -1,0 +1,3 @@
+[submodule "models/berkeley/Berkeley-Humanoid-Lite-Assets"]
+	path = models/berkeley/Berkeley-Humanoid-Lite-Assets
+	url = https://github.com/HybridRobotics/Berkeley-Humanoid-Lite-Assets.git

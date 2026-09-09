@@ -20,6 +20,7 @@
   - Engineering Tasks
     ● Generate the inventory from the compiled MuJoCo model.
     ● Write it to CSV or JSON.
+    ● Create a human-readable summary document from the generated data
 
       '''
          unset PYTHONPATH

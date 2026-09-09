@@ -1,0 +1,674 @@
+{
+    "joints": [
+        {
+            "Joint Name": "base_freejoint",
+            "Joint Type": "0/free (floating base)",
+            "Joint ID": 0,
+            "qpos_addr": 0,
+            "n_qpos": 7,
+            "dof_addr": 0,
+            "n_dof": 6,
+            "Initial qpos": [
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Initial qvel": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Joint Range": "N/A (free joint)",
+            "Driven by": [
+                "None"
+            ]
+        },
+        {
+            "Joint Name": "arm_left_shoulder_pitch_joint",
+            "Joint Type": "3/hinge",
+            "Joint ID": 1,
+            "qpos_addr": 7,
+            "n_qpos": 1,
+            "dof_addr": 6,
+            "n_dof": 1,
+            "Initial qpos": [
+                0.0
+            ],
+            "Initial qvel": [
+                0.0
+            ],
+            "Joint Range": "-1.571,  0.785",
+            "Driven by": [
+                "arm_left_shoulder_pitch_joint"
+            ]
+        },
+        {
+            "Joint Name": "arm_left_shoulder_roll_joint",
+            "Joint Type": "3/hinge",
+            "Joint ID": 2,
+            "qpos_addr": 8,
+            "n_qpos": 1,
+            "dof_addr": 7,
+            "n_dof": 1,
+            "Initial qpos": [
+                0.0
+            ],
+            "Initial qvel": [
+                0.0
+            ],
+            "Joint Range": "-0.262,  1.309",
+            "Driven by": [
+                "arm_left_shoulder_roll_joint"
+            ]
+        },
+        {
+            "Joint Name": "arm_left_shoulder_yaw_joint",
+            "Joint Type": "3/hinge",
+            "Joint ID": 3,
+            "qpos_addr": 9,
+            "n_qpos": 1,
+            "dof_addr": 8,
+            "n_dof": 1,
+            "Initial qpos": [
+                0.0
+            ],
+            "Initial qvel": [
+                0.0
+            ],
+            "Joint Range": "-0.785,  0.785",
+            "Driven by": [
+                "arm_left_shoulder_yaw_joint"
+            ]
+        },
+        {
+            "Joint Name": "arm_left_elbow_pitch_joint",
+            "Joint Type": "3/hinge",
+            "Joint ID": 4,
+            "qpos_addr": 10,
+            "n_qpos": 1,
+            "dof_addr": 9,
+            "n_dof": 1,
+            "Initial qpos": [
+                0.0
+            ],
+            "Initial qvel": [
+                0.0
+            ],
+            "Joint Range": "-0.000,  1.571",
+            "Driven by": [
+                "arm_left_elbow_pitch_joint"
+            ]
+        },
+        {
+            "Joint Name": "arm_left_elbow_roll_joint",
+            "Joint Type": "3/hinge",
+            "Joint ID": 5,
+            "qpos_addr": 11,
+            "n_qpos": 1,
+            "dof_addr": 10,
+            "n_dof": 1,
+            "Initial qpos": [
+                0.0
+            ],
+            "Initial qvel": [
+                0.0
+            ],
+            "Joint Range": "-0.785,  0.785",
+            "Driven by": [
+                "arm_left_elbow_roll_joint"
+            ]
+        },
+        {
+            "Joint Name": "arm_right_shoulder_pitch_joint",
+            "Joint Type": "3/hinge",
+            "Joint ID": 6,
+            "qpos_addr": 12,
+            "n_qpos": 1,
+            "dof_addr": 11,
+            "n_dof": 1,
+            "Initial qpos": [
+                0.0
+            ],
+            "Initial qvel": [
+                0.0
+            ],
+            "Joint Range": "-0.785,  1.571",
+            "Driven by": [
+                "arm_right_shoulder_pitch_joint"
+            ]
+        },
+        {
+            "Joint Name": "arm_right_shoulder_roll_joint",
+            "Joint Type": "3/hinge",
+            "Joint ID": 7,
+            "qpos_addr": 13,
+            "n_qpos": 1,
+            "dof_addr": 12,
+            "n_dof": 1,
+            "Initial qpos": [
+                0.0
+            ],
+            "Initial qvel": [
+                0.0
+            ],
+            "Joint Range": "-1.309,  0.262",
+            "Driven by": [
+                "arm_right_shoulder_roll_joint"
+            ]
+        },
+        {
+            "Joint Name": "arm_right_shoulder_yaw_joint",
+            "Joint Type": "3/hinge",
+            "Joint ID": 8,
+            "qpos_addr": 14,
+            "n_qpos": 1,
+            "dof_addr": 13,
+            "n_dof": 1,
+            "Initial qpos": [
+                0.0
+            ],
+            "Initial qvel": [
+                0.0
+            ],
+            "Joint Range": "-0.785,  0.785",
+            "Driven by": [
+                "arm_right_shoulder_yaw_joint"
+            ]
+        },
+        {
+            "Joint Name": "arm_right_elbow_pitch_joint",
+            "Joint Type": "3/hinge",
+            "Joint ID": 9,
+            "qpos_addr": 15,
+            "n_qpos": 1,
+            "dof_addr": 14,
+            "n_dof": 1,
+            "Initial qpos": [
+                0.0
+            ],
+            "Initial qvel": [
+                0.0
+            ],
+            "Joint Range": "-1.571, -0.000",
+            "Driven by": [
+                "arm_right_elbow_pitch_joint"
+            ]
+        },
+        {
+            "Joint Name": "arm_right_elbow_roll_joint",
+            "Joint Type": "3/hinge",
+            "Joint ID": 10,
+            "qpos_addr": 16,
+            "n_qpos": 1,
+            "dof_addr": 15,
+            "n_dof": 1,
+            "Initial qpos": [
+                0.0
+            ],
+            "Initial qvel": [
+                0.0
+            ],
+            "Joint Range": "-0.785,  0.785",
+            "Driven by": [
+                "arm_right_elbow_roll_joint"
+            ]
+        },
+        {
+            "Joint Name": "leg_left_hip_roll_joint",
+            "Joint Type": "3/hinge",
+            "Joint ID": 11,
+            "qpos_addr": 17,
+            "n_qpos": 1,
+            "dof_addr": 16,
+            "n_dof": 1,
+            "Initial qpos": [
+                0.0
+            ],
+            "Initial qvel": [
+                0.0
+            ],
+            "Joint Range": "-0.175,  1.571",
+            "Driven by": [
+                "leg_left_hip_roll_joint"
+            ]
+        },
+        {
+            "Joint Name": "leg_left_hip_yaw_joint",
+            "Joint Type": "3/hinge",
+            "Joint ID": 12,
+            "qpos_addr": 18,
+            "n_qpos": 1,
+            "dof_addr": 17,
+            "n_dof": 1,
+            "Initial qpos": [
+                0.0
+            ],
+            "Initial qvel": [
+                0.0
+            ],
+            "Joint Range": "-0.982,  0.589",
+            "Driven by": [
+                "leg_left_hip_yaw_joint"
+            ]
+        },
+        {
+            "Joint Name": "leg_left_hip_pitch_joint",
+            "Joint Type": "3/hinge",
+            "Joint ID": 13,
+            "qpos_addr": 19,
+            "n_qpos": 1,
+            "dof_addr": 18,
+            "n_dof": 1,
+            "Initial qpos": [
+                0.0
+            ],
+            "Initial qvel": [
+                0.0
+            ],
+            "Joint Range": "-1.898,  0.982",
+            "Driven by": [
+                "leg_left_hip_pitch_joint"
+            ]
+        },
+        {
+            "Joint Name": "leg_left_knee_pitch_joint",
+            "Joint Type": "3/hinge",
+            "Joint ID": 14,
+            "qpos_addr": 20,
+            "n_qpos": 1,
+            "dof_addr": 19,
+            "n_dof": 1,
+            "Initial qpos": [
+                0.0
+            ],
+            "Initial qvel": [
+                0.0
+            ],
+            "Joint Range": "-0.000,  2.443",
+            "Driven by": [
+                "leg_left_knee_pitch_joint"
+            ]
+        },
+        {
+            "Joint Name": "leg_left_ankle_pitch_joint",
+            "Joint Type": "3/hinge",
+            "Joint ID": 15,
+            "qpos_addr": 21,
+            "n_qpos": 1,
+            "dof_addr": 20,
+            "n_dof": 1,
+            "Initial qpos": [
+                0.0
+            ],
+            "Initial qvel": [
+                0.0
+            ],
+            "Joint Range": "-0.785,  0.785",
+            "Driven by": [
+                "leg_left_ankle_pitch_joint"
+            ]
+        },
+        {
+            "Joint Name": "leg_left_ankle_roll_joint",
+            "Joint Type": "3/hinge",
+            "Joint ID": 16,
+            "qpos_addr": 22,
+            "n_qpos": 1,
+            "dof_addr": 21,
+            "n_dof": 1,
+            "Initial qpos": [
+                0.0
+            ],
+            "Initial qvel": [
+                0.0
+            ],
+            "Joint Range": "-0.262,  0.262",
+            "Driven by": [
+                "leg_left_ankle_roll_joint"
+            ]
+        },
+        {
+            "Joint Name": "leg_right_hip_roll_joint",
+            "Joint Type": "3/hinge",
+            "Joint ID": 17,
+            "qpos_addr": 23,
+            "n_qpos": 1,
+            "dof_addr": 22,
+            "n_dof": 1,
+            "Initial qpos": [
+                0.0
+            ],
+            "Initial qvel": [
+                0.0
+            ],
+            "Joint Range": "-1.571,  0.175",
+            "Driven by": [
+                "leg_right_hip_roll_joint"
+            ]
+        },
+        {
+            "Joint Name": "leg_right_hip_yaw_joint",
+            "Joint Type": "3/hinge",
+            "Joint ID": 18,
+            "qpos_addr": 24,
+            "n_qpos": 1,
+            "dof_addr": 23,
+            "n_dof": 1,
+            "Initial qpos": [
+                0.0
+            ],
+            "Initial qvel": [
+                0.0
+            ],
+            "Joint Range": "-0.589,  0.982",
+            "Driven by": [
+                "leg_right_hip_yaw_joint"
+            ]
+        },
+        {
+            "Joint Name": "leg_right_hip_pitch_joint",
+            "Joint Type": "3/hinge",
+            "Joint ID": 19,
+            "qpos_addr": 25,
+            "n_qpos": 1,
+            "dof_addr": 24,
+            "n_dof": 1,
+            "Initial qpos": [
+                0.0
+            ],
+            "Initial qvel": [
+                0.0
+            ],
+            "Joint Range": "-1.898,  0.982",
+            "Driven by": [
+                "leg_right_hip_pitch_joint"
+            ]
+        },
+        {
+            "Joint Name": "leg_right_knee_pitch_joint",
+            "Joint Type": "3/hinge",
+            "Joint ID": 20,
+            "qpos_addr": 26,
+            "n_qpos": 1,
+            "dof_addr": 25,
+            "n_dof": 1,
+            "Initial qpos": [
+                0.0
+            ],
+            "Initial qvel": [
+                0.0
+            ],
+            "Joint Range": "-0.000,  2.443",
+            "Driven by": [
+                "leg_right_knee_pitch_joint"
+            ]
+        },
+        {
+            "Joint Name": "leg_right_ankle_pitch_joint",
+            "Joint Type": "3/hinge",
+            "Joint ID": 21,
+            "qpos_addr": 27,
+            "n_qpos": 1,
+            "dof_addr": 26,
+            "n_dof": 1,
+            "Initial qpos": [
+                0.0
+            ],
+            "Initial qvel": [
+                0.0
+            ],
+            "Joint Range": "-0.785,  0.785",
+            "Driven by": [
+                "leg_right_ankle_pitch_joint"
+            ]
+        },
+        {
+            "Joint Name": "leg_right_ankle_roll_joint",
+            "Joint Type": "3/hinge",
+            "Joint ID": 22,
+            "qpos_addr": 28,
+            "n_qpos": 1,
+            "dof_addr": 27,
+            "n_dof": 1,
+            "Initial qpos": [
+                0.0
+            ],
+            "Initial qvel": [
+                0.0
+            ],
+            "Joint Range": "-0.262,  0.262",
+            "Driven by": [
+                "leg_right_ankle_roll_joint"
+            ]
+        }
+    ],
+    "actuators": [
+        {
+            "Actuator Name": "arm_left_shoulder_pitch_joint",
+            "Actuator ID": 0,
+            "Drives Joint": "arm_left_shoulder_pitch_joint",
+            "Joint ID": 1,
+            "Force Range (N*m)": "-20.000,  20.000",
+            "Force Range Explicitly Defined": "No",
+            "Ctrl Range": "Unlimited/Not Defaulted",
+            "Ctrl Range Explicitly Defined": "No"
+        },
+        {
+            "Actuator Name": "arm_left_shoulder_roll_joint",
+            "Actuator ID": 1,
+            "Drives Joint": "arm_left_shoulder_roll_joint",
+            "Joint ID": 2,
+            "Force Range (N*m)": "-20.000,  20.000",
+            "Force Range Explicitly Defined": "No",
+            "Ctrl Range": "Unlimited/Not Defaulted",
+            "Ctrl Range Explicitly Defined": "No"
+        },
+        {
+            "Actuator Name": "arm_left_shoulder_yaw_joint",
+            "Actuator ID": 2,
+            "Drives Joint": "arm_left_shoulder_yaw_joint",
+            "Joint ID": 3,
+            "Force Range (N*m)": "-20.000,  20.000",
+            "Force Range Explicitly Defined": "No",
+            "Ctrl Range": "Unlimited/Not Defaulted",
+            "Ctrl Range Explicitly Defined": "No"
+        },
+        {
+            "Actuator Name": "arm_left_elbow_pitch_joint",
+            "Actuator ID": 3,
+            "Drives Joint": "arm_left_elbow_pitch_joint",
+            "Joint ID": 4,
+            "Force Range (N*m)": "-20.000,  20.000",
+            "Force Range Explicitly Defined": "No",
+            "Ctrl Range": "Unlimited/Not Defaulted",
+            "Ctrl Range Explicitly Defined": "No"
+        },
+        {
+            "Actuator Name": "arm_left_elbow_roll_joint",
+            "Actuator ID": 4,
+            "Drives Joint": "arm_left_elbow_roll_joint",
+            "Joint ID": 5,
+            "Force Range (N*m)": "-20.000,  20.000",
+            "Force Range Explicitly Defined": "No",
+            "Ctrl Range": "Unlimited/Not Defaulted",
+            "Ctrl Range Explicitly Defined": "No"
+        },
+        {
+            "Actuator Name": "arm_right_shoulder_pitch_joint",
+            "Actuator ID": 5,
+            "Drives Joint": "arm_right_shoulder_pitch_joint",
+            "Joint ID": 6,
+            "Force Range (N*m)": "-20.000,  20.000",
+            "Force Range Explicitly Defined": "No",
+            "Ctrl Range": "Unlimited/Not Defaulted",
+            "Ctrl Range Explicitly Defined": "No"
+        },
+        {
+            "Actuator Name": "arm_right_shoulder_roll_joint",
+            "Actuator ID": 6,
+            "Drives Joint": "arm_right_shoulder_roll_joint",
+            "Joint ID": 7,
+            "Force Range (N*m)": "-20.000,  20.000",
+            "Force Range Explicitly Defined": "No",
+            "Ctrl Range": "Unlimited/Not Defaulted",
+            "Ctrl Range Explicitly Defined": "No"
+        },
+        {
+            "Actuator Name": "arm_right_shoulder_yaw_joint",
+            "Actuator ID": 7,
+            "Drives Joint": "arm_right_shoulder_yaw_joint",
+            "Joint ID": 8,
+            "Force Range (N*m)": "-20.000,  20.000",
+            "Force Range Explicitly Defined": "No",
+            "Ctrl Range": "Unlimited/Not Defaulted",
+            "Ctrl Range Explicitly Defined": "No"
+        },
+        {
+            "Actuator Name": "arm_right_elbow_pitch_joint",
+            "Actuator ID": 8,
+            "Drives Joint": "arm_right_elbow_pitch_joint",
+            "Joint ID": 9,
+            "Force Range (N*m)": "-20.000,  20.000",
+            "Force Range Explicitly Defined": "No",
+            "Ctrl Range": "Unlimited/Not Defaulted",
+            "Ctrl Range Explicitly Defined": "No"
+        },
+        {
+            "Actuator Name": "arm_right_elbow_roll_joint",
+            "Actuator ID": 9,
+            "Drives Joint": "arm_right_elbow_roll_joint",
+            "Joint ID": 10,
+            "Force Range (N*m)": "-20.000,  20.000",
+            "Force Range Explicitly Defined": "No",
+            "Ctrl Range": "Unlimited/Not Defaulted",
+            "Ctrl Range Explicitly Defined": "No"
+        },
+        {
+            "Actuator Name": "leg_left_hip_roll_joint",
+            "Actuator ID": 10,
+            "Drives Joint": "leg_left_hip_roll_joint",
+            "Joint ID": 11,
+            "Force Range (N*m)": "-20.000,  20.000",
+            "Force Range Explicitly Defined": "No",
+            "Ctrl Range": "Unlimited/Not Defaulted",
+            "Ctrl Range Explicitly Defined": "No"
+        },
+        {
+            "Actuator Name": "leg_left_hip_yaw_joint",
+            "Actuator ID": 11,
+            "Drives Joint": "leg_left_hip_yaw_joint",
+            "Joint ID": 12,
+            "Force Range (N*m)": "-20.000,  20.000",
+            "Force Range Explicitly Defined": "No",
+            "Ctrl Range": "Unlimited/Not Defaulted",
+            "Ctrl Range Explicitly Defined": "No"
+        },
+        {
+            "Actuator Name": "leg_left_hip_pitch_joint",
+            "Actuator ID": 12,
+            "Drives Joint": "leg_left_hip_pitch_joint",
+            "Joint ID": 13,
+            "Force Range (N*m)": "-20.000,  20.000",
+            "Force Range Explicitly Defined": "No",
+            "Ctrl Range": "Unlimited/Not Defaulted",
+            "Ctrl Range Explicitly Defined": "No"
+        },
+        {
+            "Actuator Name": "leg_left_knee_pitch_joint",
+            "Actuator ID": 13,
+            "Drives Joint": "leg_left_knee_pitch_joint",
+            "Joint ID": 14,
+            "Force Range (N*m)": "-20.000,  20.000",
+            "Force Range Explicitly Defined": "No",
+            "Ctrl Range": "Unlimited/Not Defaulted",
+            "Ctrl Range Explicitly Defined": "No"
+        },
+        {
+            "Actuator Name": "leg_left_ankle_pitch_joint",
+            "Actuator ID": 14,
+            "Drives Joint": "leg_left_ankle_pitch_joint",
+            "Joint ID": 15,
+            "Force Range (N*m)": "-20.000,  20.000",
+            "Force Range Explicitly Defined": "No",
+            "Ctrl Range": "Unlimited/Not Defaulted",
+            "Ctrl Range Explicitly Defined": "No"
+        },
+        {
+            "Actuator Name": "leg_left_ankle_roll_joint",
+            "Actuator ID": 15,
+            "Drives Joint": "leg_left_ankle_roll_joint",
+            "Joint ID": 16,
+            "Force Range (N*m)": "-20.000,  20.000",
+            "Force Range Explicitly Defined": "No",
+            "Ctrl Range": "Unlimited/Not Defaulted",
+            "Ctrl Range Explicitly Defined": "No"
+        },
+        {
+            "Actuator Name": "leg_right_hip_roll_joint",
+            "Actuator ID": 16,
+            "Drives Joint": "leg_right_hip_roll_joint",
+            "Joint ID": 17,
+            "Force Range (N*m)": "-20.000,  20.000",
+            "Force Range Explicitly Defined": "No",
+            "Ctrl Range": "Unlimited/Not Defaulted",
+            "Ctrl Range Explicitly Defined": "No"
+        },
+        {
+            "Actuator Name": "leg_right_hip_yaw_joint",
+            "Actuator ID": 17,
+            "Drives Joint": "leg_right_hip_yaw_joint",
+            "Joint ID": 18,
+            "Force Range (N*m)": "-20.000,  20.000",
+            "Force Range Explicitly Defined": "No",
+            "Ctrl Range": "Unlimited/Not Defaulted",
+            "Ctrl Range Explicitly Defined": "No"
+        },
+        {
+            "Actuator Name": "leg_right_hip_pitch_joint",
+            "Actuator ID": 18,
+            "Drives Joint": "leg_right_hip_pitch_joint",
+            "Joint ID": 19,
+            "Force Range (N*m)": "-20.000,  20.000",
+            "Force Range Explicitly Defined": "No",
+            "Ctrl Range": "Unlimited/Not Defaulted",
+            "Ctrl Range Explicitly Defined": "No"
+        },
+        {
+            "Actuator Name": "leg_right_knee_pitch_joint",
+            "Actuator ID": 19,
+            "Drives Joint": "leg_right_knee_pitch_joint",
+            "Joint ID": 20,
+            "Force Range (N*m)": "-20.000,  20.000",
+            "Force Range Explicitly Defined": "No",
+            "Ctrl Range": "Unlimited/Not Defaulted",
+            "Ctrl Range Explicitly Defined": "No"
+        },
+        {
+            "Actuator Name": "leg_right_ankle_pitch_joint",
+            "Actuator ID": 20,
+            "Drives Joint": "leg_right_ankle_pitch_joint",
+            "Joint ID": 21,
+            "Force Range (N*m)": "-20.000,  20.000",
+            "Force Range Explicitly Defined": "No",
+            "Ctrl Range": "Unlimited/Not Defaulted",
+            "Ctrl Range Explicitly Defined": "No"
+        },
+        {
+            "Actuator Name": "leg_right_ankle_roll_joint",
+            "Actuator ID": 21,
+            "Drives Joint": "leg_right_ankle_roll_joint",
+            "Joint ID": 22,
+            "Force Range (N*m)": "-20.000,  20.000",
+            "Force Range Explicitly Defined": "No",
+            "Ctrl Range": "Unlimited/Not Defaulted",
+            "Ctrl Range Explicitly Defined": "No"
+        }
+    ]
+}

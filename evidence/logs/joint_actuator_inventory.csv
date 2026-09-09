@@ -1,49 +1,49 @@
 JOINT INVENTORY
-Joint Name,Joint Type,Joint ID,qpos_addr n_qpos,dof_addr n_dof,Joint Range,Driven by
-base_freejoint,0/unknown,0,0 (0 slots),0 (0 slots),N/A (free joint),None
-arm_left_shoulder_pitch_joint,3/unknown,1,7 (0 slots),6 (0 slots),"-1.571,  0.785",arm_left_shoulder_pitch_joint
-arm_left_shoulder_roll_joint,3/unknown,2,8 (0 slots),7 (0 slots),"-0.262,  1.309",arm_left_shoulder_roll_joint
-arm_left_shoulder_yaw_joint,3/unknown,3,9 (0 slots),8 (0 slots),"-0.785,  0.785",arm_left_shoulder_yaw_joint
-arm_left_elbow_pitch_joint,3/unknown,4,10 (0 slots),9 (0 slots),"-0.000,  1.571",arm_left_elbow_pitch_joint
-arm_left_elbow_roll_joint,3/unknown,5,11 (0 slots),10 (0 slots),"-0.785,  0.785",arm_left_elbow_roll_joint
-arm_right_shoulder_pitch_joint,3/unknown,6,12 (0 slots),11 (0 slots),"-0.785,  1.571",arm_right_shoulder_pitch_joint
-arm_right_shoulder_roll_joint,3/unknown,7,13 (0 slots),12 (0 slots),"-1.309,  0.262",arm_right_shoulder_roll_joint
-arm_right_shoulder_yaw_joint,3/unknown,8,14 (0 slots),13 (0 slots),"-0.785,  0.785",arm_right_shoulder_yaw_joint
-arm_right_elbow_pitch_joint,3/unknown,9,15 (0 slots),14 (0 slots),"-1.571, -0.000",arm_right_elbow_pitch_joint
-arm_right_elbow_roll_joint,3/unknown,10,16 (0 slots),15 (0 slots),"-0.785,  0.785",arm_right_elbow_roll_joint
-leg_left_hip_roll_joint,3/unknown,11,17 (0 slots),16 (0 slots),"-0.175,  1.571",leg_left_hip_roll_joint
-leg_left_hip_yaw_joint,3/unknown,12,18 (0 slots),17 (0 slots),"-0.982,  0.589",leg_left_hip_yaw_joint
-leg_left_hip_pitch_joint,3/unknown,13,19 (0 slots),18 (0 slots),"-1.898,  0.982",leg_left_hip_pitch_joint
-leg_left_knee_pitch_joint,3/unknown,14,20 (0 slots),19 (0 slots),"-0.000,  2.443",leg_left_knee_pitch_joint
-leg_left_ankle_pitch_joint,3/unknown,15,21 (0 slots),20 (0 slots),"-0.785,  0.785",leg_left_ankle_pitch_joint
-leg_left_ankle_roll_joint,3/unknown,16,22 (0 slots),21 (0 slots),"-0.262,  0.262",leg_left_ankle_roll_joint
-leg_right_hip_roll_joint,3/unknown,17,23 (0 slots),22 (0 slots),"-1.571,  0.175",leg_right_hip_roll_joint
-leg_right_hip_yaw_joint,3/unknown,18,24 (0 slots),23 (0 slots),"-0.589,  0.982",leg_right_hip_yaw_joint
-leg_right_hip_pitch_joint,3/unknown,19,25 (0 slots),24 (0 slots),"-1.898,  0.982",leg_right_hip_pitch_joint
-leg_right_knee_pitch_joint,3/unknown,20,26 (0 slots),25 (0 slots),"-0.000,  2.443",leg_right_knee_pitch_joint
-leg_right_ankle_pitch_joint,3/unknown,21,27 (0 slots),26 (0 slots),"-0.785,  0.785",leg_right_ankle_pitch_joint
-leg_right_ankle_roll_joint,3/unknown,22,28 (0 slots),27 (0 slots),"-0.262,  0.262",leg_right_ankle_roll_joint
+Joint Name,Joint Type,Joint ID,qpos_addr n_qpos,dof_addr n_dof,Initial qpos,Initial qvel,Joint Range,Driven by
+base_freejoint,0/free (floating base),0,0 (7 slots),0 (6 slots)," 0.000,  0.000,  0.000,  1.000,  0.000,  0.000,  0.000"," 0.000,  0.000,  0.000,  0.000,  0.000,  0.000",N/A (free joint),None
+arm_left_shoulder_pitch_joint,3/hinge,1,7 (1 slots),6 (1 slots),0.0,0.0,"-1.571,  0.785",arm_left_shoulder_pitch_joint
+arm_left_shoulder_roll_joint,3/hinge,2,8 (1 slots),7 (1 slots),0.0,0.0,"-0.262,  1.309",arm_left_shoulder_roll_joint
+arm_left_shoulder_yaw_joint,3/hinge,3,9 (1 slots),8 (1 slots),0.0,0.0,"-0.785,  0.785",arm_left_shoulder_yaw_joint
+arm_left_elbow_pitch_joint,3/hinge,4,10 (1 slots),9 (1 slots),0.0,0.0,"-0.000,  1.571",arm_left_elbow_pitch_joint
+arm_left_elbow_roll_joint,3/hinge,5,11 (1 slots),10 (1 slots),0.0,0.0,"-0.785,  0.785",arm_left_elbow_roll_joint
+arm_right_shoulder_pitch_joint,3/hinge,6,12 (1 slots),11 (1 slots),0.0,0.0,"-0.785,  1.571",arm_right_shoulder_pitch_joint
+arm_right_shoulder_roll_joint,3/hinge,7,13 (1 slots),12 (1 slots),0.0,0.0,"-1.309,  0.262",arm_right_shoulder_roll_joint
+arm_right_shoulder_yaw_joint,3/hinge,8,14 (1 slots),13 (1 slots),0.0,0.0,"-0.785,  0.785",arm_right_shoulder_yaw_joint
+arm_right_elbow_pitch_joint,3/hinge,9,15 (1 slots),14 (1 slots),0.0,0.0,"-1.571, -0.000",arm_right_elbow_pitch_joint
+arm_right_elbow_roll_joint,3/hinge,10,16 (1 slots),15 (1 slots),0.0,0.0,"-0.785,  0.785",arm_right_elbow_roll_joint
+leg_left_hip_roll_joint,3/hinge,11,17 (1 slots),16 (1 slots),0.0,0.0,"-0.175,  1.571",leg_left_hip_roll_joint
+leg_left_hip_yaw_joint,3/hinge,12,18 (1 slots),17 (1 slots),0.0,0.0,"-0.982,  0.589",leg_left_hip_yaw_joint
+leg_left_hip_pitch_joint,3/hinge,13,19 (1 slots),18 (1 slots),0.0,0.0,"-1.898,  0.982",leg_left_hip_pitch_joint
+leg_left_knee_pitch_joint,3/hinge,14,20 (1 slots),19 (1 slots),0.0,0.0,"-0.000,  2.443",leg_left_knee_pitch_joint
+leg_left_ankle_pitch_joint,3/hinge,15,21 (1 slots),20 (1 slots),0.0,0.0,"-0.785,  0.785",leg_left_ankle_pitch_joint
+leg_left_ankle_roll_joint,3/hinge,16,22 (1 slots),21 (1 slots),0.0,0.0,"-0.262,  0.262",leg_left_ankle_roll_joint
+leg_right_hip_roll_joint,3/hinge,17,23 (1 slots),22 (1 slots),0.0,0.0,"-1.571,  0.175",leg_right_hip_roll_joint
+leg_right_hip_yaw_joint,3/hinge,18,24 (1 slots),23 (1 slots),0.0,0.0,"-0.589,  0.982",leg_right_hip_yaw_joint
+leg_right_hip_pitch_joint,3/hinge,19,25 (1 slots),24 (1 slots),0.0,0.0,"-1.898,  0.982",leg_right_hip_pitch_joint
+leg_right_knee_pitch_joint,3/hinge,20,26 (1 slots),25 (1 slots),0.0,0.0,"-0.000,  2.443",leg_right_knee_pitch_joint
+leg_right_ankle_pitch_joint,3/hinge,21,27 (1 slots),26 (1 slots),0.0,0.0,"-0.785,  0.785",leg_right_ankle_pitch_joint
+leg_right_ankle_roll_joint,3/hinge,22,28 (1 slots),27 (1 slots),0.0,0.0,"-0.262,  0.262",leg_right_ankle_roll_joint
 ACTUATOR INVENTORY
-Actuator Name,Actuator Type,Actuator ID,Drives Joint,Joint ID,Force Range (N*m),Force Range Explicitly Defined,Ctrl Range,Ctrl Range Explicitly Defined
-arm_left_shoulder_pitch_joint,0,0,arm_left_shoulder_pitch_joint,1,"-20.000,  20.000",Yes,Unlimited/Not Defaulted,No
-arm_left_shoulder_roll_joint,0,1,arm_left_shoulder_roll_joint,2,"-20.000,  20.000",Yes,Unlimited/Not Defaulted,No
-arm_left_shoulder_yaw_joint,0,2,arm_left_shoulder_yaw_joint,3,"-20.000,  20.000",Yes,Unlimited/Not Defaulted,No
-arm_left_elbow_pitch_joint,0,3,arm_left_elbow_pitch_joint,4,"-20.000,  20.000",Yes,Unlimited/Not Defaulted,No
-arm_left_elbow_roll_joint,0,4,arm_left_elbow_roll_joint,5,"-20.000,  20.000",Yes,Unlimited/Not Defaulted,No
-arm_right_shoulder_pitch_joint,0,5,arm_right_shoulder_pitch_joint,6,"-20.000,  20.000",Yes,Unlimited/Not Defaulted,No
-arm_right_shoulder_roll_joint,0,6,arm_right_shoulder_roll_joint,7,"-20.000,  20.000",Yes,Unlimited/Not Defaulted,No
-arm_right_shoulder_yaw_joint,0,7,arm_right_shoulder_yaw_joint,8,"-20.000,  20.000",Yes,Unlimited/Not Defaulted,No
-arm_right_elbow_pitch_joint,0,8,arm_right_elbow_pitch_joint,9,"-20.000,  20.000",Yes,Unlimited/Not Defaulted,No
-arm_right_elbow_roll_joint,0,9,arm_right_elbow_roll_joint,10,"-20.000,  20.000",Yes,Unlimited/Not Defaulted,No
-leg_left_hip_roll_joint,0,10,leg_left_hip_roll_joint,11,"-20.000,  20.000",Yes,Unlimited/Not Defaulted,No
-leg_left_hip_yaw_joint,0,11,leg_left_hip_yaw_joint,12,"-20.000,  20.000",Yes,Unlimited/Not Defaulted,No
-leg_left_hip_pitch_joint,0,12,leg_left_hip_pitch_joint,13,"-20.000,  20.000",Yes,Unlimited/Not Defaulted,No
-leg_left_knee_pitch_joint,0,13,leg_left_knee_pitch_joint,14,"-20.000,  20.000",Yes,Unlimited/Not Defaulted,No
-leg_left_ankle_pitch_joint,0,14,leg_left_ankle_pitch_joint,15,"-20.000,  20.000",Yes,Unlimited/Not Defaulted,No
-leg_left_ankle_roll_joint,0,15,leg_left_ankle_roll_joint,16,"-20.000,  20.000",Yes,Unlimited/Not Defaulted,No
-leg_right_hip_roll_joint,0,16,leg_right_hip_roll_joint,17,"-20.000,  20.000",Yes,Unlimited/Not Defaulted,No
-leg_right_hip_yaw_joint,0,17,leg_right_hip_yaw_joint,18,"-20.000,  20.000",Yes,Unlimited/Not Defaulted,No
-leg_right_hip_pitch_joint,0,18,leg_right_hip_pitch_joint,19,"-20.000,  20.000",Yes,Unlimited/Not Defaulted,No
-leg_right_knee_pitch_joint,0,19,leg_right_knee_pitch_joint,20,"-20.000,  20.000",Yes,Unlimited/Not Defaulted,No
-leg_right_ankle_pitch_joint,0,20,leg_right_ankle_pitch_joint,21,"-20.000,  20.000",Yes,Unlimited/Not Defaulted,No
-leg_right_ankle_roll_joint,0,21,leg_right_ankle_roll_joint,22,"-20.000,  20.000",Yes,Unlimited/Not Defaulted,No
+Actuator Name,Actuator ID,Drives Joint,Joint ID,Force Range (N*m),Force Range Explicitly Defined,Ctrl Range,Ctrl Range Explicitly Defined
+arm_left_shoulder_pitch_joint,0,arm_left_shoulder_pitch_joint,1,"-20.000,  20.000",No,Unlimited/Not Defaulted,No
+arm_left_shoulder_roll_joint,1,arm_left_shoulder_roll_joint,2,"-20.000,  20.000",No,Unlimited/Not Defaulted,No
+arm_left_shoulder_yaw_joint,2,arm_left_shoulder_yaw_joint,3,"-20.000,  20.000",No,Unlimited/Not Defaulted,No
+arm_left_elbow_pitch_joint,3,arm_left_elbow_pitch_joint,4,"-20.000,  20.000",No,Unlimited/Not Defaulted,No
+arm_left_elbow_roll_joint,4,arm_left_elbow_roll_joint,5,"-20.000,  20.000",No,Unlimited/Not Defaulted,No
+arm_right_shoulder_pitch_joint,5,arm_right_shoulder_pitch_joint,6,"-20.000,  20.000",No,Unlimited/Not Defaulted,No
+arm_right_shoulder_roll_joint,6,arm_right_shoulder_roll_joint,7,"-20.000,  20.000",No,Unlimited/Not Defaulted,No
+arm_right_shoulder_yaw_joint,7,arm_right_shoulder_yaw_joint,8,"-20.000,  20.000",No,Unlimited/Not Defaulted,No
+arm_right_elbow_pitch_joint,8,arm_right_elbow_pitch_joint,9,"-20.000,  20.000",No,Unlimited/Not Defaulted,No
+arm_right_elbow_roll_joint,9,arm_right_elbow_roll_joint,10,"-20.000,  20.000",No,Unlimited/Not Defaulted,No
+leg_left_hip_roll_joint,10,leg_left_hip_roll_joint,11,"-20.000,  20.000",No,Unlimited/Not Defaulted,No
+leg_left_hip_yaw_joint,11,leg_left_hip_yaw_joint,12,"-20.000,  20.000",No,Unlimited/Not Defaulted,No
+leg_left_hip_pitch_joint,12,leg_left_hip_pitch_joint,13,"-20.000,  20.000",No,Unlimited/Not Defaulted,No
+leg_left_knee_pitch_joint,13,leg_left_knee_pitch_joint,14,"-20.000,  20.000",No,Unlimited/Not Defaulted,No
+leg_left_ankle_pitch_joint,14,leg_left_ankle_pitch_joint,15,"-20.000,  20.000",No,Unlimited/Not Defaulted,No
+leg_left_ankle_roll_joint,15,leg_left_ankle_roll_joint,16,"-20.000,  20.000",No,Unlimited/Not Defaulted,No
+leg_right_hip_roll_joint,16,leg_right_hip_roll_joint,17,"-20.000,  20.000",No,Unlimited/Not Defaulted,No
+leg_right_hip_yaw_joint,17,leg_right_hip_yaw_joint,18,"-20.000,  20.000",No,Unlimited/Not Defaulted,No
+leg_right_hip_pitch_joint,18,leg_right_hip_pitch_joint,19,"-20.000,  20.000",No,Unlimited/Not Defaulted,No
+leg_right_knee_pitch_joint,19,leg_right_knee_pitch_joint,20,"-20.000,  20.000",No,Unlimited/Not Defaulted,No
+leg_right_ankle_pitch_joint,20,leg_right_ankle_pitch_joint,21,"-20.000,  20.000",No,Unlimited/Not Defaulted,No
+leg_right_ankle_roll_joint,21,leg_right_ankle_roll_joint,22,"-20.000,  20.000",No,Unlimited/Not Defaulted,No

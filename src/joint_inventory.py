@@ -14,11 +14,14 @@ import json
 import os
 import time
 import mujoco
+import xml.etree.ElementTree as ET
 
 MODEL_PATH = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", 
              "models/berkeley/Berkeley-Humanoid-Lite-Assets/data/robots/berkeley_humanoid/berkeley_humanoid_lite/mjcf", "bhl_scene.xml"))
 
-OUTPUT_PATH = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", "evidence/logs/", "joint_actuator_inventory.csv"))
+OUTPUT_CSVPATH = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", "evidence/logs/", "joint_actuator_inventory.csv"))
+OUTPUT_JSONPATH = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", "evidence/logs/", "joint_actuator_inventory.json"))
+OUTPUT_MD_SUMMARY_PATH = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", "docs", "joint_actuator_map.md"))
 
 JOINT_TRANSMISSION_TYPES = {int(mujoco.mjtTrn.mjTRN_JOINT), int(mujoco.mjtTrn.mjTRN_JOINTINPARENT)}
 
@@ -29,6 +32,41 @@ JOINT_TYPE_INFO = {
     mujoco.mjtJoint.mjJNT_SLIDE:  ("slide", 1, 1),
     mujoco.mjtJoint.mjJNT_HINGE:  ("hinge", 1, 1),
 }
+
+def build_provenance_map(xml_path, attr, tag="motor"):
+    """Returns {actuator_name: 'explicit' | 'inherited' | 'absent'} for a given attr."""
+    tree = ET.parse(xml_path)
+    root = tree.getroot()
+
+    class_mp = {}
+    def walk_defaults(node, parent = None):
+        name = node.get("class")
+        if name is not None:
+            class_mp[name] = (node, parent)
+        for child in node.findall("default"):
+            walk_defaults(child, name)
+    default_root = root.find("default")
+    if default_root is not None:
+        walk_defaults(default_root)
+
+    result = {}
+    for motor in root.iter(tag):
+        name = motor.get("name")
+        if name is None:
+            continue
+        if attr in motor.attrib:
+            result[name] = "explicit"
+            continue
+        cls, source = motor.get("class"), "absent"
+        while cls is not None:
+            node, parent = class_mp[cls]
+            sub = node.find(tag)
+            if sub is not None and attr in sub.attrib:
+                source = "inherited"
+                break
+            cls = parent
+        result[name] = source
+    return result
 
 def build_actuator_index(model):
 
@@ -43,8 +81,16 @@ def build_actuator_index(model):
 
     return joint_to_actuators
 
-def joint_table(model, joint_to_actuators):
-    with open(OUTPUT_PATH, "w", newline="") as file:
+def format_slice(values):
+    """Format a qpos/qvel slice: a bare number for single-slot joints,
+    a comma-separated list for multi-slot joints (e.g. free joints)."""
+    values = [float(v) for v in values]
+    if len(values) == 1:
+        return values[0]
+    return ", ".join(f"{v: .3f}" for v in values)
+
+def joint_csvtable(model, joint_to_actuators):
+    with open(OUTPUT_CSVPATH, "w", newline="") as file:
         writer = csv.writer(file)
 
         # Section header
@@ -57,16 +103,25 @@ def joint_table(model, joint_to_actuators):
             "Joint ID",
             "qpos_addr n_qpos",
             "dof_addr n_dof",
+            "Initial qpos",
+            "Initial qvel",
             "Joint Range",
             "Driven by"
         ])
-
+        
+        data = mujoco.MjData(model)
         for j_id in range(model.njnt):
             joint_name = mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_JOINT, j_id)
             joint_type = model.jnt_type[j_id]
-            label, n_qpos, n_dof = JOINT_TYPE_INFO.get(joint_type, ("unknown", 0, 0))
+            label, n_qpos, n_dof = JOINT_TYPE_INFO.get(int(joint_type), ("unknown", 0, 0))
             qpos_addr = model.jnt_qposadr[j_id]
             qdof_addr = model.jnt_dofadr[j_id]
+
+            qpos_slice = data.qpos[qpos_addr : qpos_addr + n_qpos]
+            qvel_slice = data.qvel[qdof_addr : qdof_addr + n_dof]
+
+            initial_qpos = format_slice(qpos_slice)
+            initial_qvel = format_slice(qvel_slice)
 
             if joint_type == mujoco.mjtJoint.mjJNT_FREE:
                 joint_range_str = "N/A (free joint)"
@@ -85,12 +140,57 @@ def joint_table(model, joint_to_actuators):
                 j_id,
                 f"{qpos_addr} ({n_qpos} slots)",
                 f"{qdof_addr} ({n_dof} slots)",
+                initial_qpos,
+                initial_qvel,
                 joint_range_str,
                 drivers
             ])
 
-def actuator_table(model):
-    with open(OUTPUT_PATH, "a", newline="") as file:
+def joint_jsontable(model, joint_to_actuators):
+    joints = []
+
+    data = mujoco.MjData(model)
+    for j_id in range(model.njnt):
+        joint_name = mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_JOINT, j_id)
+        joint_type = model.jnt_type[j_id]
+        label, n_qpos, n_dof = JOINT_TYPE_INFO.get(int(joint_type), ("unknown", 0, 0))
+        qpos_addr = model.jnt_qposadr[j_id]
+        qdof_addr = model.jnt_dofadr[j_id]
+
+        qpos_slice = data.qpos[qpos_addr : qpos_addr + n_qpos]
+        qvel_slice = data.qvel[qdof_addr : qdof_addr + n_dof]
+
+        initial_qpos = [float(v) for v in qpos_slice]
+        initial_qvel = [float(v) for v in qvel_slice]
+
+        if joint_type == mujoco.mjtJoint.mjJNT_FREE:
+            joint_range_str = "N/A (free joint)"
+        elif model.jnt_limited[j_id]:
+            lo, hi = model.jnt_range[j_id]
+            joint_range_str = f'{lo: .3f}, {hi: .3f}'
+        else:
+            joint_range_str = "N/A (unlimited)"
+
+        drivers = joint_to_actuators.get(j_id, ["None"])
+
+        joints.append({
+            "Joint Name": joint_name,
+            "Joint Type": f"{joint_type}/{label}",
+            "Joint ID": j_id,
+            "qpos_addr": int(qpos_addr),
+            "n_qpos": n_qpos,
+            "dof_addr": int(qdof_addr),
+            "n_dof": n_dof,
+            "Initial qpos": initial_qpos,
+            "Initial qvel": initial_qvel,
+            "Joint Range": joint_range_str,
+            "Driven by": drivers
+        })
+    
+    return joints
+
+def actuator_csvtable(model):
+    with open(OUTPUT_CSVPATH, "a", newline="") as file:
         writer = csv.writer(file)
 
         # Section header
@@ -99,7 +199,6 @@ def actuator_table(model):
         # CSV header
         writer.writerow([
             "Actuator Name",
-            "Actuator Type",
             "Actuator ID",
             "Drives Joint",
             "Joint ID",
@@ -111,7 +210,6 @@ def actuator_table(model):
 
         for ac_id in range(model.nu):
             actuator_name = mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_ACTUATOR, ac_id)
-            actuator_type = model.actuator_trntype[ac_id]
 
             if model.actuator_trntype[ac_id] in JOINT_TRANSMISSION_TYPES:
                 joint_id = model.actuator_trnid[ac_id, 0]
@@ -119,27 +217,26 @@ def actuator_table(model):
             else:
                 joint_id = None
                 joint_name = "N/A"
-        
+            
+            force_results = build_provenance_map(MODEL_PATH, "forcerange", tag="motor")
             if model.actuator_forcelimited[ac_id] == True:
                 lo_force, hi_force = model.actuator_forcerange[ac_id]
                 force_str = f"{lo_force: .3f}, {hi_force: .3f}"
-                force_explicit = "Yes"
             else:
                 force_str = "Unlimited/Not Defaulted"
-                force_explicit = "No"
+            force_explicit = "Yes" if force_results.get(actuator_name) == "explicit" else "No"
 
+            ctrl_results = build_provenance_map(MODEL_PATH, "ctrlrange", tag="motor")   
             if model.actuator_ctrllimited[ac_id] == True:
                 lo_ctrl, hi_ctrl = model.actuator_ctrlrange[ac_id]
                 ctrl_str = f"{lo_ctrl: .3f}, {hi_ctrl: .3f}"
-                ctrl_explicit = "Yes"
             else:
                 ctrl_str = "Unlimited/Not Defaulted"
-                ctrl_explicit = "No"
+            ctrl_explicit = "Yes" if ctrl_results.get(actuator_name) == "explicit" else "No"
         
             # Write one CSV row
             writer.writerow([
                 actuator_name,
-                actuator_type,
                 ac_id,
                 joint_name,
                 joint_id,
@@ -149,12 +246,107 @@ def actuator_table(model):
                 ctrl_explicit
             ])
 
+def actuator_jsontable(model):
+    actuators = []
+
+    for ac_id in range(model.nu):
+        actuator_name = mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_ACTUATOR, ac_id)
+
+        if model.actuator_trntype[ac_id] in JOINT_TRANSMISSION_TYPES:
+            joint_id = model.actuator_trnid[ac_id, 0]
+            joint_name = mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_JOINT, joint_id)
+        else:
+            joint_id = None
+            joint_name = "N/A"
+        
+        force_results = build_provenance_map(MODEL_PATH, "forcerange", tag="motor")
+        if model.actuator_forcelimited[ac_id] == True:
+            lo_force, hi_force = model.actuator_forcerange[ac_id]
+            force_range_str = f"{lo_force: .3f}, {hi_force: .3f}"
+        else:
+            force_range_str = "Unlimited/Not Defaulted"
+        force_explicit = "Yes" if force_results.get(actuator_name) == "explicit" else f"No, {force_results.get(actuator_name)}"
+
+        ctrl_results = build_provenance_map(MODEL_PATH, "ctrlrange", tag="motor")
+        if model.actuator_ctrllimited[ac_id] == True:
+            lo_ctrl, hi_ctrl = model.actuator_ctrlrange[ac_id]
+            ctrl_range_str = f"{lo_ctrl: .3f}, {hi_ctrl: .3f}"
+        else:
+            ctrl_range_str = "Unlimited/Not Defaulted"
+        ctrl_explicit = "Yes" if ctrl_results.get(actuator_name) == "explicit" else f"No, {ctrl_results.get(actuator_name)}"
+
+        actuators.append({
+            "Actuator Name": actuator_name,
+            "Actuator ID": ac_id,
+            "Drives Joint": joint_name,
+            "Joint ID": (int(joint_id) if joint_id is not None else None),
+            "Force Range (N*m)": force_range_str,
+            "Force Range Explicitly Defined": force_explicit,
+            "Ctrl Range": ctrl_range_str,
+            "Ctrl Range Explicitly Defined": ctrl_explicit
+        })
+
+    return actuators
+
+def write_markdown_summary(joints, actuators, output_path):
+    with open(output_path, "w", encoding="utf-8") as file:
+        file.write("# Joint and Actuator Inventory Summary\n\n")
+        file.write(f"Generated on: {time.strftime('%Y-%m-%d %H:%M:%S')}\n\n")
+
+        file.write("## Joints\n\n")
+        for joint in joints:
+            file.write(f"### {joint['Joint Name']}\n")
+            file.write(f"- Type: {joint['Joint Type']}\n")
+            file.write(f"- ID: {joint['Joint ID']}\n")
+            file.write(f"- qpos_addr: {joint['qpos_addr']} ({joint['n_qpos']} slots)\n")
+            file.write(f"- dof_addr: {joint['dof_addr']} ({joint['n_dof']} slots)\n")
+            file.write(f"- Initial qpos: {joint['Initial qpos']}\n")
+            file.write(f"- Initial qvel: {joint['Initial qvel']}\n")
+            file.write(f"- Joint Range: {joint['Joint Range']}\n")
+            file.write(f"- Driven by: {','.join(joint['Driven by'])}\n\n")
+
+        file.write("## Actuators\n\n")
+        for actuator in actuators:
+            file.write(f"### {actuator['Actuator Name']}\n")
+            file.write(f"- ID: {actuator['Actuator ID']}\n")
+            file.write(f"- Drives Joint: {actuator['Drives Joint']}\n")
+            file.write(f"- Joint ID: {actuator['Joint ID']}\n")
+            file.write(f"- Force Range (N*m): {actuator['Force Range (N*m)']}\n")
+            file.write(f"- Force Range Explicitly Defined: {actuator['Force Range Explicitly Defined']}\n")
+            file.write(f"- Ctrl Range: {actuator['Ctrl Range']}\n")
+            file.write(f"- Ctrl Range Explicitly Defined: {actuator['Ctrl Range Explicitly Defined']}\n\n")
+
 def main():
     model = mujoco.MjModel.from_xml_path(MODEL_PATH)
     joint_to_actuators = build_actuator_index(model)
     
-    joint_table(model, joint_to_actuators)
-    actuator_table(model)
+    """
+    Task #1, #2: Generate CSV inventory of joints and actuators
+    joint_csvtable(model, joint_to_actuators)
+    actuator_csvtable(model)
+    """
+
+    joints = joint_jsontable(model, joint_to_actuators)
+    actuators = actuator_jsontable(model)
+    
+    """
+    Task #2: Generate JSON inventory of joints and actuators
+    json_inventory = {
+        "joints": joints,
+        "actuators": actuators
+    }
+
+    with open(OUTPUT_JSONPATH, "w", encoding="utf-8") as file:
+        json.dump(json_inventory, file, indent=4)
+
+    print(f"JSON inventory written to: {OUTPUT_JSONPATH}")
+    """
+
+    """
+    Task #3: Generate Markdown summary of joints and actuators
+    """
+    write_markdown_summary(joints, actuators, OUTPUT_MD_SUMMARY_PATH)
+    print(f"Markdown Summary written to: {OUTPUT_MD_SUMMARY_PATH}")
 
 if __name__ == "__main__":
     main()

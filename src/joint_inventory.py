@@ -19,6 +19,9 @@ import xml.etree.ElementTree as ET
 MODEL_PATH = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", 
              "models/berkeley/Berkeley-Humanoid-Lite-Assets/data/robots/berkeley_humanoid/berkeley_humanoid_lite/mjcf", "bhl_scene.xml"))
 
+HUMANOID_LITE_PATH = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", 
+             "models/berkeley/Berkeley-Humanoid-Lite-Assets/data/robots/berkeley_humanoid/berkeley_humanoid_lite/mjcf", "berkeley_humanoid_lite.xml"))           
+
 OUTPUT_CSVPATH = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", "evidence/logs/", "joint_actuator_inventory.csv"))
 OUTPUT_JSONPATH = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", "evidence/logs/", "joint_actuator_inventory.json"))
 OUTPUT_MD_SUMMARY_PATH = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", "docs", "joint_actuator_map.md"))
@@ -207,7 +210,9 @@ def actuator_csvtable(model):
             "Ctrl Range",
             "Ctrl Range Explicitly Defined"
         ])
-
+        
+        force_results = build_provenance_map(HUMANOID_LITE_PATH, "forcerange", tag="motor")
+        ctrl_results = build_provenance_map(HUMANOID_LITE_PATH, "ctrlrange", tag="motor")
         for ac_id in range(model.nu):
             actuator_name = mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_ACTUATOR, ac_id)
 
@@ -218,21 +223,21 @@ def actuator_csvtable(model):
                 joint_id = None
                 joint_name = "N/A"
             
-            force_results = build_provenance_map(MODEL_PATH, "forcerange", tag="motor")
+            
             if model.actuator_forcelimited[ac_id] == True:
                 lo_force, hi_force = model.actuator_forcerange[ac_id]
                 force_str = f"{lo_force: .3f}, {hi_force: .3f}"
             else:
                 force_str = "Unlimited/Not Defaulted"
-            force_explicit = "Yes" if force_results.get(actuator_name) == "explicit" else "No"
+            force_explicit = "Yes" if force_results.get(actuator_name) == "explicit" else f"No, {force_results.get(actuator_name)}"
 
-            ctrl_results = build_provenance_map(MODEL_PATH, "ctrlrange", tag="motor")   
+               
             if model.actuator_ctrllimited[ac_id] == True:
                 lo_ctrl, hi_ctrl = model.actuator_ctrlrange[ac_id]
                 ctrl_str = f"{lo_ctrl: .3f}, {hi_ctrl: .3f}"
             else:
                 ctrl_str = "Unlimited/Not Defaulted"
-            ctrl_explicit = "Yes" if ctrl_results.get(actuator_name) == "explicit" else "No"
+            ctrl_explicit = "Yes" if ctrl_results.get(actuator_name) == "explicit" else f"No, {ctrl_results.get(actuator_name)}"
         
             # Write one CSV row
             writer.writerow([
@@ -248,7 +253,9 @@ def actuator_csvtable(model):
 
 def actuator_jsontable(model):
     actuators = []
-
+    
+    force_results = build_provenance_map(HUMANOID_LITE_PATH, "forcerange", tag="motor")
+    ctrl_results = build_provenance_map(HUMANOID_LITE_PATH, "ctrlrange", tag="motor")
     for ac_id in range(model.nu):
         actuator_name = mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_ACTUATOR, ac_id)
 
@@ -259,7 +266,7 @@ def actuator_jsontable(model):
             joint_id = None
             joint_name = "N/A"
         
-        force_results = build_provenance_map(MODEL_PATH, "forcerange", tag="motor")
+        
         if model.actuator_forcelimited[ac_id] == True:
             lo_force, hi_force = model.actuator_forcerange[ac_id]
             force_range_str = f"{lo_force: .3f}, {hi_force: .3f}"
@@ -267,7 +274,7 @@ def actuator_jsontable(model):
             force_range_str = "Unlimited/Not Defaulted"
         force_explicit = "Yes" if force_results.get(actuator_name) == "explicit" else f"No, {force_results.get(actuator_name)}"
 
-        ctrl_results = build_provenance_map(MODEL_PATH, "ctrlrange", tag="motor")
+        
         if model.actuator_ctrllimited[ac_id] == True:
             lo_ctrl, hi_ctrl = model.actuator_ctrlrange[ac_id]
             ctrl_range_str = f"{lo_ctrl: .3f}, {hi_ctrl: .3f}"
@@ -300,8 +307,8 @@ def write_markdown_summary(joints, actuators, output_path):
             file.write(f"- ID: {joint['Joint ID']}\n")
             file.write(f"- qpos_addr: {joint['qpos_addr']} ({joint['n_qpos']} slots)\n")
             file.write(f"- dof_addr: {joint['dof_addr']} ({joint['n_dof']} slots)\n")
-            file.write(f"- Initial qpos: {joint['Initial qpos']}\n")
-            file.write(f"- Initial qvel: {joint['Initial qvel']}\n")
+            file.write(f"- Initial qpos: {[f'{v:.3f}' for v in joint['Initial qpos']]}\n")
+            file.write(f"- Initial qvel: {[f'{v:.3f}' for v in joint['Initial qvel']]}\n")
             file.write(f"- Joint Range: {joint['Joint Range']}\n")
             file.write(f"- Driven by: {','.join(joint['Driven by'])}\n\n")
 
@@ -320,27 +327,25 @@ def main():
     model = mujoco.MjModel.from_xml_path(MODEL_PATH)
     joint_to_actuators = build_actuator_index(model)
     
-    """
-    Task #1, #2: Generate CSV inventory of joints and actuators
-    joint_csvtable(model, joint_to_actuators)
-    actuator_csvtable(model)
-    """
+    
+    # Task #1, #2: Generate CSV inventory of joints and actuators
+    # joint_csvtable(model, joint_to_actuators)
+    # actuator_csvtable(model)
+    
 
     joints = joint_jsontable(model, joint_to_actuators)
     actuators = actuator_jsontable(model)
     
-    """
-    Task #2: Generate JSON inventory of joints and actuators
-    json_inventory = {
-        "joints": joints,
-        "actuators": actuators
-    }
+    # Task #2: Generate JSON inventory of joints and actuators
+    # json_inventory = {
+    #     "joints": joints,
+    #     "actuators": actuators
+    # }
 
-    with open(OUTPUT_JSONPATH, "w", encoding="utf-8") as file:
-        json.dump(json_inventory, file, indent=4)
+    # with open(OUTPUT_JSONPATH, "w", encoding="utf-8") as file:
+    #     json.dump(json_inventory, file, indent=4)
 
-    print(f"JSON inventory written to: {OUTPUT_JSONPATH}")
-    """
+    # print(f"JSON inventory written to: {OUTPUT_JSONPATH}")
 
     """
     Task #3: Generate Markdown summary of joints and actuators

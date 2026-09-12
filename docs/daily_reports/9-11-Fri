@@ -1,0 +1,59 @@
+### Milestone
+     Milestone 1 — Build the Berkeley Joint/Actuator Inventory
+
+### Current objective
+
+### Work Completed
+
+### Commands or tests run
+
+     Tasks #5:
+      '''
+         unset PYTHONPATH
+         source .venv/bin/activate
+         python src/joint_inventory.py
+         deactivate
+      '''
+
+### Blockers
+
+     In task #5, I thought "duplicate names" is the joints/actuators that appear more than once in the list of joints or actuator; The missing mappings has been achieved in the "test_no_unexpected_unactuated_joints; For "unexpected ranges", I was a little confused what is unexpected ranges because all items of ranges for joints/actuators are plausible.
+
+### How I investigated
+
+   I asked my thoughts to Claude Code for help. It explained my confusion with details and examples.
+    """
+    1. Duplicate names — your definition is right, but it's worth knowing why it can never trigger for a single successfully-loaded model.
+      It tested this directly: giving two joints the same name causes MuJoCo's own compiler to refuse to load the model at all:
+
+                                                <COMPILE ERROR: XML Error: Error: repeated name 'dup' in joint>
+
+      So if mujoco.MjModel.from_xml_path(...) succeeded, you're already guaranteed unique names within each object type — MuJoCo enforced that before your Python code ever ran. That means checking for duplicate names in the raw model is redundant. Where a duplicate check still earns its place: guarding against your own generation code accidentally producing a duplicate row — e.g., a loop bug that appends the same joint twice into your joints list, or (more realistically down the line) if the tool is ever pointed at a scene that merges multiple sub-models. So frame it as: "assert len(joint_names) == len(set(joint_names)) on your own generated inventory list," a self-integrity check on your tool's output, not a check on the model.
+
+    2. Missing mappings — this is where I'd push back a bit on "already achieved."
+
+       test_no_unexpected_unactuated_joints lives in your test suite — it only runs when someone explicitly executes pytest, and it only proves the current model doesn't have this problem. Task 5 is asking something different: that joint_inventory.py itself, while generating the inventory, notices and surfaces this — so that if this tool is ever pointed at a modified or different Berkeley variant six months from now, whoever runs it gets an immediate warning without needing to remember a separate test file exists. Tests are a safety net that catches regressions later; detection is the tool being self-aware at generation time, which is the literal meaning of "instead of silently continuing."
+
+       Concretely, there's actually a live example of "silently continuing" already in your code: any actuator whose transmission type isn't JOINT/JOINTINPARENT gets quietly written as joint_name = "N/A" with no flag calling attention to it. That's a reasonable default, but per this task it probably deserves an explicit warning printed during generation (print(f"WARNING: actuator {name} has non-joint transmission type {t}")), so a human skimming the console output — not just the CSV — notices it happened.
+
+    3. Unexpected ranges — I'd actually push back harder here, because I tested this and your assumption is wrong.
+
+       It checked two things directly against MuJoCo's compiler:
+         ● Joint ranges: MuJoCo does reject a reversed range (lo > hi) —
+             <Error: range[0] should be smaller than range[1] in joint>
+
+           So that specific malformation can't happen in a compiled model. But MuJoCo has zero concept of what's physically sensible — I tested a hinge joint with range="-90 90" under angle="radian" (your compiler tag sets this), and it compiled without complaint, silently producing a joint limited to ±90 radians (≈ ±5,157°, physically meaningless for a real revolute joint). A degrees/radians mixup is one of the most common real MJCF authoring mistakes, and MuJoCo's compiler does nothing to catch it.
+
+         ● Actuator forcerange: unlike joints, MuJoCo doesn't even enforce ordering here. I gave a motor forcerange="20 -20" (reversed) and it compiled fine, producing actuator_forcerange = [20, -20] verbatim — nonsensical, but MuJoCo accepted it without error.
+
+         So "unexpected ranges" absolutely can happen, and the compiler won't save you from either case. Worth adding to your generator: a sanity check that hinge joint ranges fall within some bound you decide is physically plausible for this robot (e.g., no more than one full rotation each direction), a check that forcerange[0] < forcerange[1] (and same for ctrlrange when it's active) since MuJoCo won't verify that for you, and a flag on any zero-width range (lo == hi), which could be an intentionally locked joint or could be a data-entry mistake — worth surfacing either way rather than treating it as unremarkable.
+
+         I'd leave the exact numeric thresholds (what counts as "too wide" for this specific robot's joints) as something you decide from your own inspection of the real ranges, rather than a value I hand you.
+    """
+
+    I read it carefully and thought about each item of explaination. Then, According the explaination, I modified my source file.
+
+### What I Learned
+ 
+      Worth knowing: assert disappears entirely if this script is ever run with python -O.
+      Python strips every assert statement when run in optimized mode (-O flag sets __debug__ = False, and asserts compile to no-ops). For validation whose entire purpose is "detect problems instead of silently continuing," that's a real risk — someone running this in a slightly different environment (or a CI pipeline with -O set) would get your exact silently-continuing failure mode back, with no warning that the checks were even skipped. For checks you want to be non-negotiable, raise ValueError(...) is more robust than assert. You don't have to change everything — but it's worth deciding deliberately rather than by default.

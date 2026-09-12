@@ -456,9 +456,9 @@
             "Drives Joint": "arm_left_shoulder_pitch_joint",
             "Joint ID": 1,
             "Force Range (N*m)": "-20.000,  20.000",
-            "Force Range Explicitly Defined": "No",
+            "Force Range Explicitly Defined": "Yes",
             "Ctrl Range": "Unlimited/Not Defaulted",
-            "Ctrl Range Explicitly Defined": "No"
+            "Ctrl Range Explicitly Defined": "No, absent"
         },
         {
             "Actuator Name": "arm_left_shoulder_roll_joint",
@@ -466,9 +466,9 @@
             "Drives Joint": "arm_left_shoulder_roll_joint",
             "Joint ID": 2,
             "Force Range (N*m)": "-20.000,  20.000",
-            "Force Range Explicitly Defined": "No",
+            "Force Range Explicitly Defined": "Yes",
             "Ctrl Range": "Unlimited/Not Defaulted",
-            "Ctrl Range Explicitly Defined": "No"
+            "Ctrl Range Explicitly Defined": "No, absent"
         },
         {
             "Actuator Name": "arm_left_shoulder_yaw_joint",
@@ -476,9 +476,9 @@
             "Drives Joint": "arm_left_shoulder_yaw_joint",
             "Joint ID": 3,
             "Force Range (N*m)": "-20.000,  20.000",
-            "Force Range Explicitly Defined": "No",
+            "Force Range Explicitly Defined": "Yes",
             "Ctrl Range": "Unlimited/Not Defaulted",
-            "Ctrl Range Explicitly Defined": "No"
+            "Ctrl Range Explicitly Defined": "No, absent"
         },
         {
             "Actuator Name": "arm_left_elbow_pitch_joint",
@@ -486,9 +486,9 @@
             "Drives Joint": "arm_left_elbow_pitch_joint",
             "Joint ID": 4,
             "Force Range (N*m)": "-20.000,  20.000",
-            "Force Range Explicitly Defined": "No",
+            "Force Range Explicitly Defined": "Yes",
             "Ctrl Range": "Unlimited/Not Defaulted",
-            "Ctrl Range Explicitly Defined": "No"
+            "Ctrl Range Explicitly Defined": "No, absent"
         },
         {
             "Actuator Name": "arm_left_elbow_roll_joint",
@@ -496,9 +496,9 @@
             "Drives Joint": "arm_left_elbow_roll_joint",
             "Joint ID": 5,
             "Force Range (N*m)": "-20.000,  20.000",
-            "Force Range Explicitly Defined": "No",
+            "Force Range Explicitly Defined": "Yes",
             "Ctrl Range": "Unlimited/Not Defaulted",
-            "Ctrl Range Explicitly Defined": "No"
+            "Ctrl Range Explicitly Defined": "No, absent"
         },
         {
             "Actuator Name": "arm_right_shoulder_pitch_joint",
@@ -506,9 +506,9 @@
             "Drives Joint": "arm_right_shoulder_pitch_joint",
             "Joint ID": 6,
             "Force Range (N*m)": "-20.000,  20.000",
-            "Force Range Explicitly Defined": "No",
+            "Force Range Explicitly Defined": "Yes",
             "Ctrl Range": "Unlimited/Not Defaulted",
-            "Ctrl Range Explicitly Defined": "No"
+            "Ctrl Range Explicitly Defined": "No, absent"
         },
         {
             "Actuator Name": "arm_right_shoulder_roll_joint",
@@ -516,9 +516,9 @@
             "Drives Joint": "arm_right_shoulder_roll_joint",
             "Joint ID": 7,
             "Force Range (N*m)": "-20.000,  20.000",
-            "Force Range Explicitly Defined": "No",
+            "Force Range Explicitly Defined": "Yes",
             "Ctrl Range": "Unlimited/Not Defaulted",
-            "Ctrl Range Explicitly Defined": "No"
+            "Ctrl Range Explicitly Defined": "No, absent"
         },
         {
             "Actuator Name": "arm_right_shoulder_yaw_joint",
@@ -526,9 +526,9 @@
             "Drives Joint": "arm_right_shoulder_yaw_joint",
             "Joint ID": 8,
             "Force Range (N*m)": "-20.000,  20.000",
-            "Force Range Explicitly Defined": "No",
+            "Force Range Explicitly Defined": "Yes",
             "Ctrl Range": "Unlimited/Not Defaulted",
-            "Ctrl Range Explicitly Defined": "No"
+            "Ctrl Range Explicitly Defined": "No, absent"
         },
         {
             "Actuator Name": "arm_right_elbow_pitch_joint",
@@ -536,9 +536,9 @@
             "Drives Joint": "arm_right_elbow_pitch_joint",
             "Joint ID": 9,
             "Force Range (N*m)": "-20.000,  20.000",
-            "Force Range Explicitly Defined": "No",
+            "Force Range Explicitly Defined": "Yes",
             "Ctrl Range": "Unlimited/Not Defaulted",
-            "Ctrl Range Explicitly Defined": "No"
+            "Ctrl Range Explicitly Defined": "No, absent"
         },
         {
             "Actuator Name": "arm_right_elbow_roll_joint",
@@ -546,9 +546,9 @@
             "Drives Joint": "arm_right_elbow_roll_joint",
             "Joint ID": 10,
             "Force Range (N*m)": "-20.000,  20.000",
-            "Force Range Explicitly Defined": "No",
+            "Force Range Explicitly Defined": "Yes",
             "Ctrl Range": "Unlimited/Not Defaulted",
-            "Ctrl Range Explicitly Defined": "No"
+            "Ctrl Range Explicitly Defined": "No, absent"
         },
         {
             "Actuator Name": "leg_left_hip_roll_joint",
@@ -556,9 +556,9 @@
             "Drives Joint": "leg_left_hip_roll_joint",
             "Joint ID": 11,
             "Force Range (N*m)": "-20.000,  20.000",
-            "Force Range Explicitly Defined": "No",
+            "Force Range Explicitly Defined": "Yes",
             "Ctrl Range": "Unlimited/Not Defaulted",
-            "Ctrl Range Explicitly Defined": "No"
+            "Ctrl Range Explicitly Defined": "No, absent"
         },
         {
             "Actuator Name": "leg_left_hip_yaw_joint",
@@ -566,9 +566,9 @@
             "Drives Joint": "leg_left_hip_yaw_joint",
             "Joint ID": 12,
             "Force Range (N*m)": "-20.000,  20.000",
-            "Force Range Explicitly Defined": "No",
+            "Force Range Explicitly Defined": "Yes",
             "Ctrl Range": "Unlimited/Not Defaulted",
-            "Ctrl Range Explicitly Defined": "No"
+            "Ctrl Range Explicitly Defined": "No, absent"
         },
         {
             "Actuator Name": "leg_left_hip_pitch_joint",
@@ -576,9 +576,9 @@
             "Drives Joint": "leg_left_hip_pitch_joint",
             "Joint ID": 13,
             "Force Range (N*m)": "-20.000,  20.000",
-            "Force Range Explicitly Defined": "No",
+            "Force Range Explicitly Defined": "Yes",
             "Ctrl Range": "Unlimited/Not Defaulted",
-            "Ctrl Range Explicitly Defined": "No"
+            "Ctrl Range Explicitly Defined": "No, absent"
         },
         {
             "Actuator Name": "leg_left_knee_pitch_joint",
@@ -586,9 +586,9 @@
             "Drives Joint": "leg_left_knee_pitch_joint",
             "Joint ID": 14,
             "Force Range (N*m)": "-20.000,  20.000",
-            "Force Range Explicitly Defined": "No",
+            "Force Range Explicitly Defined": "Yes",
             "Ctrl Range": "Unlimited/Not Defaulted",
-            "Ctrl Range Explicitly Defined": "No"
+            "Ctrl Range Explicitly Defined": "No, absent"
         },
         {
             "Actuator Name": "leg_left_ankle_pitch_joint",
@@ -596,9 +596,9 @@
             "Drives Joint": "leg_left_ankle_pitch_joint",
             "Joint ID": 15,
             "Force Range (N*m)": "-20.000,  20.000",
-            "Force Range Explicitly Defined": "No",
+            "Force Range Explicitly Defined": "Yes",
             "Ctrl Range": "Unlimited/Not Defaulted",
-            "Ctrl Range Explicitly Defined": "No"
+            "Ctrl Range Explicitly Defined": "No, absent"
         },
         {
             "Actuator Name": "leg_left_ankle_roll_joint",
@@ -606,9 +606,9 @@
             "Drives Joint": "leg_left_ankle_roll_joint",
             "Joint ID": 16,
             "Force Range (N*m)": "-20.000,  20.000",
-            "Force Range Explicitly Defined": "No",
+            "Force Range Explicitly Defined": "Yes",
             "Ctrl Range": "Unlimited/Not Defaulted",
-            "Ctrl Range Explicitly Defined": "No"
+            "Ctrl Range Explicitly Defined": "No, absent"
         },
         {
             "Actuator Name": "leg_right_hip_roll_joint",
@@ -616,9 +616,9 @@
             "Drives Joint": "leg_right_hip_roll_joint",
             "Joint ID": 17,
             "Force Range (N*m)": "-20.000,  20.000",
-            "Force Range Explicitly Defined": "No",
+            "Force Range Explicitly Defined": "Yes",
             "Ctrl Range": "Unlimited/Not Defaulted",
-            "Ctrl Range Explicitly Defined": "No"
+            "Ctrl Range Explicitly Defined": "No, absent"
         },
         {
             "Actuator Name": "leg_right_hip_yaw_joint",
@@ -626,9 +626,9 @@
             "Drives Joint": "leg_right_hip_yaw_joint",
             "Joint ID": 18,
             "Force Range (N*m)": "-20.000,  20.000",
-            "Force Range Explicitly Defined": "No",
+            "Force Range Explicitly Defined": "Yes",
             "Ctrl Range": "Unlimited/Not Defaulted",
-            "Ctrl Range Explicitly Defined": "No"
+            "Ctrl Range Explicitly Defined": "No, absent"
         },
         {
             "Actuator Name": "leg_right_hip_pitch_joint",
@@ -636,9 +636,9 @@
             "Drives Joint": "leg_right_hip_pitch_joint",
             "Joint ID": 19,
             "Force Range (N*m)": "-20.000,  20.000",
-            "Force Range Explicitly Defined": "No",
+            "Force Range Explicitly Defined": "Yes",
             "Ctrl Range": "Unlimited/Not Defaulted",
-            "Ctrl Range Explicitly Defined": "No"
+            "Ctrl Range Explicitly Defined": "No, absent"
         },
         {
             "Actuator Name": "leg_right_knee_pitch_joint",
@@ -646,9 +646,9 @@
             "Drives Joint": "leg_right_knee_pitch_joint",
             "Joint ID": 20,
             "Force Range (N*m)": "-20.000,  20.000",
-            "Force Range Explicitly Defined": "No",
+            "Force Range Explicitly Defined": "Yes",
             "Ctrl Range": "Unlimited/Not Defaulted",
-            "Ctrl Range Explicitly Defined": "No"
+            "Ctrl Range Explicitly Defined": "No, absent"
         },
         {
             "Actuator Name": "leg_right_ankle_pitch_joint",
@@ -656,9 +656,9 @@
             "Drives Joint": "leg_right_ankle_pitch_joint",
             "Joint ID": 21,
             "Force Range (N*m)": "-20.000,  20.000",
-            "Force Range Explicitly Defined": "No",
+            "Force Range Explicitly Defined": "Yes",
             "Ctrl Range": "Unlimited/Not Defaulted",
-            "Ctrl Range Explicitly Defined": "No"
+            "Ctrl Range Explicitly Defined": "No, absent"
         },
         {
             "Actuator Name": "leg_right_ankle_roll_joint",
@@ -666,9 +666,9 @@
             "Drives Joint": "leg_right_ankle_roll_joint",
             "Joint ID": 22,
             "Force Range (N*m)": "-20.000,  20.000",
-            "Force Range Explicitly Defined": "No",
+            "Force Range Explicitly Defined": "Yes",
             "Ctrl Range": "Unlimited/Not Defaulted",
-            "Ctrl Range Explicitly Defined": "No"
+            "Ctrl Range Explicitly Defined": "No, absent"
         }
     ]
 }

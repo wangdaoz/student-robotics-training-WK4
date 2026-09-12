@@ -14,6 +14,7 @@ import json
 import os
 import time
 import mujoco
+import math
 import xml.etree.ElementTree as ET
 
 MODEL_PATH = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", 
@@ -35,6 +36,12 @@ JOINT_TYPE_INFO = {
     mujoco.mjtJoint.mjJNT_SLIDE:  ("slide", 1, 1),
     mujoco.mjtJoint.mjJNT_HINGE:  ("hinge", 1, 1),
 }
+
+def compare_two_numbers_values(a, b):
+    if a < b:
+        return True
+    else:
+        return False
 
 def build_provenance_map(xml_path, attr, tag="motor"):
     """Returns {actuator_name: 'explicit' | 'inherited' | 'absent'} for a given attr."""
@@ -130,7 +137,18 @@ def joint_csvtable(model, joint_to_actuators):
                 joint_range_str = "N/A (free joint)"
             elif model.jnt_limited[j_id]:
                 lo, hi = model.jnt_range[j_id]
+                # assert compare_two_numbers_values(lo, hi), f"Joint '{joint_name}' has invalid range: {lo} >= {hi}"
+                if lo >= hi:
+                    raise ValueError(f"Warning: Joint '{joint_name}' has invalid range: {lo} >= {hi}.")
                 joint_range_str = f"{lo: .3f}, {hi: .3f}"
+                # Reject an accidental full rotation -- usually means degrees
+                # were typed where radians were expected (see compiler angle).
+                # assert (hi - lo) <= math.pi, (
+                #     f"'{joint_name}' range spans more than a full turn: "
+                #     f"{lo:.3f} to {hi:.3f} -- check units"
+                # )
+                if (hi - lo) > math.pi:
+                    raise ValueError(f"Warning: '{joint_name}' range spans more than a full turn: {lo:.3f} to {hi:.3f} -- check units.")
             else:
                 joint_range_str = "N/A (unlimited)"
 
@@ -170,7 +188,18 @@ def joint_jsontable(model, joint_to_actuators):
             joint_range_str = "N/A (free joint)"
         elif model.jnt_limited[j_id]:
             lo, hi = model.jnt_range[j_id]
+            #assert compare_two_numbers_values(lo, hi), f"Joint '{joint_name}' has invalid range: {lo} >= {hi}"
+            if lo >= hi:
+                    raise ValueError(f"Warning: Joint '{joint_name}' has invalid range: {lo} >= {hi}.")
             joint_range_str = f'{lo: .3f}, {hi: .3f}'
+            # Reject an accidental full rotation -- usually means degrees
+            # were typed where radians were expected (see compiler angle).
+            # assert (hi - lo) <= math.pi, (
+            #     f"'{joint_name}' range spans more than a full turn: "
+            #     f"{lo:.3f} to {hi:.3f} -- check units"
+            # )
+            if (hi - lo) > math.pi:
+                    raise ValueError(f"Warning: '{joint_name}' range spans more than a full turn: {lo:.3f} to {hi:.3f} -- check units.")
         else:
             joint_range_str = "N/A (unlimited)"
 
@@ -190,6 +219,17 @@ def joint_jsontable(model, joint_to_actuators):
             "Driven by": drivers
         })
     
+    """ check the duplicate joint names in the joints list """
+    non_duplicatedjoint_names_set = set()
+    duplicate_joint_names_set = set()
+    for joint in joints:
+        joint_name = joint["Joint Name"]
+        if joint_name in non_duplicatedjoint_names_set:
+            duplicate_joint_names_set.add(joint_name)
+            print(f"Warning: Duplicate joint name found: {joint_name}. This may indicate a problem in the model or the inventory generation process!")
+        else:
+            non_duplicatedjoint_names_set.add(joint_name)
+
     return joints
 
 def actuator_csvtable(model):
@@ -222,10 +262,13 @@ def actuator_csvtable(model):
             else:
                 joint_id = None
                 joint_name = "N/A"
-            
+                print(f"Warning: Actuator '{actuator_name}' (ID {ac_id}) has non-joint transmission type {model.actuator_trntype[ac_id]}.")
             
             if model.actuator_forcelimited[ac_id] == True:
                 lo_force, hi_force = model.actuator_forcerange[ac_id]
+                # assert compare_two_numbers_values(lo_force, hi_force), f"Actuator '{actuator_name}' has invalid force range: {lo_force} >= {hi_force}"
+                if lo_force >= hi_force:
+                    raise ValueError(f"Warning: Actuator '{actuator_name}' has invalid force range: {lo_force} >= {hi_force}.")
                 force_str = f"{lo_force: .3f}, {hi_force: .3f}"
             else:
                 force_str = "Unlimited/Not Defaulted"
@@ -234,6 +277,9 @@ def actuator_csvtable(model):
                
             if model.actuator_ctrllimited[ac_id] == True:
                 lo_ctrl, hi_ctrl = model.actuator_ctrlrange[ac_id]
+                # assert compare_two_numbers_values(lo_ctrl, hi_ctrl), f"Actuator '{actuator_name}' has invalid ctrl range: {lo_ctrl} >= {hi_ctrl}"
+                if not lo_ctrl >= hi_ctrl:
+                    raise ValueError(f"Warning: Actuator '{actuator_name}' has invalid ctrl range: {lo_ctrl} >= {hi_ctrl}.")
                 ctrl_str = f"{lo_ctrl: .3f}, {hi_ctrl: .3f}"
             else:
                 ctrl_str = "Unlimited/Not Defaulted"
@@ -265,10 +311,14 @@ def actuator_jsontable(model):
         else:
             joint_id = None
             joint_name = "N/A"
+            print(f"Warning: Actuator '{actuator_name}' (ID {ac_id}) has non-joint transmission type {model.actuator_trntype[ac_id]}.")
         
         
         if model.actuator_forcelimited[ac_id] == True:
             lo_force, hi_force = model.actuator_forcerange[ac_id]
+            # assert compare_two_numbers_values(lo_force, hi_force), f"Actuator '{actuator_name}' has invalid force range: {lo_force} >= {hi_force}"
+            if lo_force >= hi_force:
+                raise ValueError(f"Warning: Actuator '{actuator_name}' has invalid force range: {lo_force} >= {hi_force}.")
             force_range_str = f"{lo_force: .3f}, {hi_force: .3f}"
         else:
             force_range_str = "Unlimited/Not Defaulted"
@@ -277,6 +327,9 @@ def actuator_jsontable(model):
         
         if model.actuator_ctrllimited[ac_id] == True:
             lo_ctrl, hi_ctrl = model.actuator_ctrlrange[ac_id]
+            # assert compare_two_numbers_values(lo_ctrl, hi_ctrl), f"Actuator '{actuator_name}' has invalid ctrl range: {lo_ctrl} >= {hi_ctrl}"
+            if lo_ctrl >= hi_ctrl:
+                raise ValueError(f"Warning: Actuator '{actuator_name}' has invalid ctrl range: {lo_ctrl} >= {hi_ctrl}.")
             ctrl_range_str = f"{lo_ctrl: .3f}, {hi_ctrl: .3f}"
         else:
             ctrl_range_str = "Unlimited/Not Defaulted"
@@ -292,6 +345,17 @@ def actuator_jsontable(model):
             "Ctrl Range": ctrl_range_str,
             "Ctrl Range Explicitly Defined": ctrl_explicit
         })
+
+    """ check the duplicate actuator names in the actuators list """
+    non_duplicatedactuator_names_set = set()
+    duplicate_actuator_names_set = set()
+    for actuator in actuators:
+        actuator_name = actuator["Actuator Name"]
+        if actuator_name in non_duplicatedactuator_names_set:
+            duplicate_actuator_names_set.add(actuator_name)
+            print(f"Warning: Duplicate actuator name found: {actuator_name}. This may indicate a problem in the model or the inventory generation process!")
+        else:
+            non_duplicatedactuator_names_set.add(actuator_name)
 
     return actuators
 
@@ -328,24 +392,24 @@ def main():
     joint_to_actuators = build_actuator_index(model)
     
     
-    # Task #1, #2: Generate CSV inventory of joints and actuators
-    # joint_csvtable(model, joint_to_actuators)
-    # actuator_csvtable(model)
+    #Task #1, #2: Generate CSV inventory of joints and actuators
+    joint_csvtable(model, joint_to_actuators)
+    actuator_csvtable(model)
     
 
     joints = joint_jsontable(model, joint_to_actuators)
     actuators = actuator_jsontable(model)
     
     # Task #2: Generate JSON inventory of joints and actuators
-    # json_inventory = {
-    #     "joints": joints,
-    #     "actuators": actuators
-    # }
+    json_inventory = {
+        "joints": joints,
+        "actuators": actuators
+    }
 
-    # with open(OUTPUT_JSONPATH, "w", encoding="utf-8") as file:
-    #     json.dump(json_inventory, file, indent=4)
+    with open(OUTPUT_JSONPATH, "w", encoding="utf-8") as file:
+        json.dump(json_inventory, file, indent=4)
 
-    # print(f"JSON inventory written to: {OUTPUT_JSONPATH}")
+    print(f"JSON inventory written to: {OUTPUT_JSONPATH}")
 
     """
     Task #3: Generate Markdown summary of joints and actuators

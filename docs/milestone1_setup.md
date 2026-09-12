@@ -53,10 +53,20 @@ tests/test_joint_inventory.py::test_known_joint_ranges[arm_left_shoulder_pitch_j
 tests/test_joint_inventory.py::test_known_joint_ranges[arm_right_shoulder_pitch_joint-expected_range1] PASSED                                      [100%]
 
 =================================================================== 7 passed in 1.20s ====================================================================
+
+ ● Detect duplicate names, missing mappings, or unexpected ranges instead of silently continuing
+    
+     '''
+         unset PYTHONPATH
+         source .venv/bin/activate
+         python src/joint_inventory.py
+         deactivate
+     '''
+
 ### Notes for for Future Students
 
    ● src/joint_inventory.py:
-
+    
     line 261: <json.dump(json_inventory, file, indent=4)>
       
     call module json's dump method:
@@ -69,6 +79,9 @@ tests/test_joint_inventory.py::test_known_joint_ranges[arm_right_shoulder_pitch_
                ● dumps(json_inventory indent=4)
                         
                      the object: json_inventory is taken and converted into JSON format and returns it as a string
+
+    Worth knowing: assert disappears entirely if this script is ever run with python -O.
+      Python strips every assert statement when run in optimized mode (-O flag sets __debug__ = False, and asserts compile to no-ops). For validation whose entire purpose is "detect problems instead of silently continuing," that's a real risk — someone running this in a slightly different environment (or a CI pipeline with -O set) would get your exact silently-continuing failure mode back, with no warning that the checks were even skipped. For checks you want to be non-negotiable, raise ValueError(...) is more robust than assert. You don't have to change everything — but it's worth deciding deliberately rather than by default.
    
    ● tests/test_joint_inventory.py
     

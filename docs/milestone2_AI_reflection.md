@@ -21,3 +21,27 @@
        ● The log folder wasn't created if missing.
        ● An invalid request overwrote the previous evidence CSV.
        ● Only an uncaught exception gave a non-zero exit status.
+
+### What I Learned
+
+    In the modified source file:
+
+      -- line 79: <spec = mujoco.MjSpec.from_file(model_path)>
+        
+         ● MjSpec
+
+           A MuJoCo class that represents a model's specification;
+           can be used to inspect or modify the model structure before compilation
+
+           MjModel represents the compiled model used by MuJoCo for simulation
+
+           < model = spec.compile() >: compile it into a simulation ready model
+
+      -- line 195: <direction = math.copysign(1.0, initial_error) if initial_error != 0 else 0.0>
+
+          ● math.copysign(1.0, initial_error)
+             
+             -- first parameter is the magnitude we want in the result
+
+             -- 'initial_error'
+                the value whose sign determines whether the result is positive or negative

@@ -1,0 +1,29 @@
+{
+  "argv": [
+    "/home/kevin-lianhu/student-robotics-training-WK4/src/joint_control.py",
+    "--joint",
+    "arm_right_shoulder_pitch_joint",
+    "--target",
+    "0.25",
+    "--duration",
+    "1.0"
+  ],
+  "joint": "arm_right_shoulder_pitch_joint",
+  "target": 0.25,
+  "control_magnitude": 1.0,
+  "duration": 1.0,
+  "margin": 0.05,
+  "freeze_base": false,
+  "model": "/home/kevin-lianhu/student-robotics-training-WK4/models/berkeley/Berkeley-Humanoid-Lite-Assets/data/robots/berkeley_humanoid/berkeley_humanoid_lite/mjcf/bhl_scene.xml",
+  "mujoco_version": "3.12.0",
+  "timestep": 0.002,
+  "steps": 500,
+  "joint_range": [
+    -0.7853981633975158,
+    1.570796326794829
+  ],
+  "final_position": 1.5479545002696748,
+  "final_error": -1.2979545002696748,
+  "cutoff": "target reached at t=0.194s",
+  "position_at_cutoff": 0.2530966408043392
+}

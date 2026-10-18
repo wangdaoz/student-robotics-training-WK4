@@ -265,7 +265,7 @@ def run(args):
             if abs(error) <= args.margin:
                 data.ctrl[act_id] = 0.0
                 if cutoff_reason is None:
-                    cutoff_reason = f"cutoff at t={data.time:.3f}s (error {error:.4f} <= margin {args.margin})"
+                    cutoff_reason = f"target reached; cutoff at t={data.time:.3f}s (error {error:.4f} <= margin {args.margin})"
                     position_at_cutoff = pos
             else:
                 data.ctrl[act_id] = Kp * error

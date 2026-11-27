@@ -1,0 +1,39 @@
+{
+  "argv": [
+    "/home/kevin-lianhu/student-robotics-training-WK4/src/position_PD_controller_revised_version.py",
+    "--joint",
+    "arm_right_shoulder_pitch_joint",
+    "--target",
+    "0.50",
+    "--Kp",
+    "50",
+    "--Kd",
+    "3.8",
+    "--duration",
+    "2.0"
+  ],
+  "joint": "arm_right_shoulder_pitch_joint",
+  "target": 0.5,
+  "Kp": 50.0,
+  "Kd": 3.8,
+  "controller": "PD",
+  "max_control": 10.0,
+  "duration": 2.0,
+  "margin": 0.05,
+  "freeze_base": false,
+  "model": "/home/kevin-lianhu/student-robotics-training-WK4/models/berkeley/Berkeley-Humanoid-Lite-Assets/data/robots/berkeley_humanoid/berkeley_humanoid_lite/mjcf/bhl_scene.xml",
+  "mujoco_version": "3.12.0",
+  "timestep": 0.002,
+  "steps": 1000,
+  "joint_range": [
+    -0.7853981633975158,
+    1.570796326794829
+  ],
+  "initial_position": 0.0,
+  "final_position": 0.5021528883432396,
+  "final_error": -0.0021528883432395673,
+  "saturated_steps": 12,
+  "limit_margin_warning": null,
+  "stop_reason": null,
+  "log_file": "evidence/logs/mile3_stretch_arm_right_shoulder_pitch_joint_t0.5_kp50_kd3.8.csv"
+}

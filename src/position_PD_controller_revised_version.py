@@ -194,7 +194,7 @@ def validate_proportional_gain(Kp):
     if not math.isfinite(Kp) or Kp <= 0:
         raise JointCommandError(f"--Kp must be a positive finite gain value, got {Kp}.")
 
-def validate_derivate_gain(Kd):
+def validate_derivative_gain(Kd):
     # Kd = 0 is allowed: it is the P-only baseline that PD is compared against.
     if not math.isfinite(Kd) or Kd < 0:
         raise JointCommandError(f"--Kd must be a positive finite gain value, got {Kd}.")
